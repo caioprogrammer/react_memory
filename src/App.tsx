@@ -1,26 +1,40 @@
 import { useEffect, useState } from 'react';
 
-import * as C from './App.styles';
+import * as C from './App.styles'; // Faz a importação dos styled components como variavel C
 
-import logoImage from './assets/devmemory_logo.png';
-import RestartIcon from './svgs/restart.svg';
+import logoImage from './assets/devmemory_logo.png'; // importação da logo
+import RestartIcon from './svgs/restart.svg'; // importação do ícone de restart
 
+// Abaixo importação dos components necessários desta parte
 import { Button } from './components/Button';
 import { InfoItem } from './components/InfoItem';
-import { GridItemType } from './types/GridItemType';
-import { items } from './data/items';
 import { GridItem } from './components/GridItem';
+
+// importação dos types necessários desta parte
+import { GridItemType } from './types/GridItemType';
+
+//importação das informações dos items a serem renderizados do game.
+import { items } from './data/items';
+
+// Importação da função que formata o tempo de cada rodada!
 import { formatTimeElapsed } from './helpers/formatTimeElapsed';
 
 const App = () => {
+  // Seta se estamos em jogo, retornando o tipo Boolean primariamente como FALSE
   const [playing, setPlaying] = useState<boolean>(false);
-  const [timeElapsed, setTimeElapsed] = useState<number>(0)
+  // seta o tempo da rodada, como tipo number primariamente como 0
+  const [timeElapsed, setTimeElapsed] = useState<number>(0);
+  // seta os movimentos que já foram dados na rodada, tipo number, primariamente como 0
   const [moveCount, setMoveCount] = useState<number>(0);
+  // Seta os items que foram mostrados na rodada, tipo number, primariamente como 0
   const [shownCount, setShownCount] = useState<number>(0);
+  // seta os items de todo o grid, sendo um Array de GridItemType, primariamente um array vazio
   const [gridItems, setGridItems] = useState<GridItemType[]>([])
 
+  // Utilizado para assim que reiniciar a página ou abrir a primeira vez, resetar o game.
   useEffect(() => resetAndCreateGrid(), [])
 
+  // Função do time, onde conta cada segundo passado na rodada
   useEffect(() => {
     const timer = setInterval(() => {
       if(playing) setTimeElapsed(timeElapsed + 1);
@@ -57,7 +71,6 @@ const App = () => {
             setShownCount(0);
           }, 1000);
         }
-
 
         setMoveCount(moveCount => moveCount + 1)
       }
@@ -103,6 +116,10 @@ const App = () => {
     setPlaying(true);
   };
 
+  /* função responsavel por saber qual item foi clicado, 
+     Onde se o item for permanente ele fica sempre mostrado na tela
+     caso contrario, ele volta ao seu estado "de costas"
+  */
   const handleItemClick = (index: number) => {
     if(playing && index !== null && shownCount < 2) {
       let tmpGrid = [...gridItems];

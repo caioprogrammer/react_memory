@@ -10,7 +10,7 @@ type Props = {
   onClick: () => void
 }
 
-export const GridItem = ({ item, onClick}: Props) => {
+export const GridItem = ({ item, onClick }: Props) => {
   return (
     <C.Container 
       showBackground={item.permanentShown === true || item.shown === true}

@@ -1,3 +1,5 @@
+// Função responsavel por formatar o Contador de Tempo
+
 export const formatTimeElapsed = (seconds: number) => {
   let minutes = Math.floor(seconds / 60);
   seconds = seconds - (minutes * 60);
